@@ -1,4 +1,7 @@
 <?php
+// セッションを開始
+session_start();
+
 $name = $_POST['user_name'];
 $email = $_POST['user_email'];
 $gender = $_POST['user_gender'];
@@ -26,6 +29,21 @@ if (empty($message)) {
 } elseif (mb_strlen($message) > 100) {
     $errors[] = 'お問い合わせ内容が100文字を超えています。';
 }
+
+// 入力項目に問題なければセッション・クッキーに保存
+if (empty($errors)) {
+    // セッション変数を保存
+    $_SESSION['name'] = $name;
+    $_SESSION['email'] = $email;
+    $_SESSION['gender'] = $gender;
+    $_SESSION['category'] = $category;
+    $_SESSION['message'] = $message;
+
+    // クッキーを登録（有効期限は1時間）
+    setcookie('name', $name, time() + 3600);
+    setcookie('email', $email, time() + 3600);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +102,6 @@ if (empty($message)) {
         // 確定ボタンを無効化するJavaScriptコードをブラウザ側に送信
         echo '<script> document.getElementById("confirm-btn").disabled = true;</script>';
     }
-
     ?>
 
 </body>

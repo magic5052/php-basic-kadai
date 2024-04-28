@@ -2,6 +2,7 @@
 // セッションを開始
 session_start();
 
+// POSTリクエストから入力データを取得
 $name = $_POST['user_name'];
 $email = $_POST['user_email'];
 $gender = $_POST['user_gender'];

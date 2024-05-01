@@ -42,32 +42,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP+DB</title>
-    <style>
-        h1,
-        p {
-            text-align: center;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form div {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1.5rem;
-        }
-
-        form label {
-            margin-top: 0.75rem;
-        }
-
-        label span {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>

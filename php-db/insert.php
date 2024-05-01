@@ -1,3 +1,40 @@
+<?php
+
+$dsn = 'mysql:dbname=php_db;host=localhost;charset=utf8mb4';
+$user = 'root';
+$password = 'root';
+
+if (isset($_POST['submit'])) {
+    try {
+        $pdo = new PDO($dsn, $user, $password);
+
+        $sql = '
+             INSERT INTO users (name, furigana, email, age, address)
+             VALUES (:name, :furigana, :email, :age, :address)
+         ';
+
+        $stmt = $pdo->prepare($sql);
+
+        // bindValue()メソッドを使って実際の値をプレースホルダにバインドする（割り当てる）
+        $stmt->bindValue(':name', $_POST['user_name'], PDO::PARAM_STR);
+        $stmt->bindValue(':furigana', $_POST['user_furigana'], PDO::PARAM_STR);
+        $stmt->bindValue(':email', $_POST['user_email'], PDO::PARAM_STR);
+        $stmt->bindValue(':age', $_POST['user_age'], PDO::PARAM_INT);
+        $stmt->bindValue(':address', $_POST['user_address'], PDO::PARAM_STR);
+
+        // SQL文を実行する
+        $stmt->execute();
+
+        // header()関数を使ってselect.phpにリダイレクトさせる
+        header('Location: select.php');
+
+    } catch (PDOException $e) {
+        exit($e->getMessage());
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -5,7 +42,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP+DB</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        h1,
+        p {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form div {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        form label {
+            margin-top: 0.75rem;
+        }
+
+        label span {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
